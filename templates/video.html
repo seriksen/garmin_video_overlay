@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Video{% endblock %}
+
+{% block content %}
+<h1>Video Player</h1>
+
+{% if video_path %}
+    <div class="video-container">
+        <video width="640" height="480" controls>
+            <source src="{{ video_path }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+{% else %}
+    <p>No video file found. Please upload a video file named 'base.mp4' or 'base.mov'.</p>
+{% endif %}
+
+{% endblock %}
