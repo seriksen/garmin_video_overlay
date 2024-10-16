@@ -5,15 +5,42 @@
 {% block content %}
 <h1>Video Player</h1>
 
-{% if video_path %}
-    <div class="video-container">
-        <video width="640" height="480" controls>
-            <source src="{{ video_path }}" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div>
-{% else %}
-    <p>No video file found. Please upload a video file named 'base.mp4' or 'base.mov'.</p>
-{% endif %}
+<div class="video-container">
+    {% if video_path %}
+        <div class="video-player">
+            <video width="640" height="480" controls>
+                <source src="{{ url_for('uploaded_file', filename=video_path.split('/')[-1]) }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="video-metadata">
+            <h2>Video Metadata</h2>
+            {% if video_info %}
+                <ul>
+                    <li>Duration: {{ video_info.duration|round(2) }} seconds</li>
+                    <li>Resolution: {{ video_info.resolution }}</li>
+                    <li>FPS: {{ video_info.fps|round(2) }}</li>
+                    <li>Frame Count: {{ video_info.frame_count }}</li>
+                    <li>Codec: {{ video_info.codec }}</li>
+                    <li>Bitrate: {{ video_info.bitrate }}</li>
+                    <li>File Size: 
+                        {% set kb = video_info.file_size / 1024 %}
+                        {% if kb < 1024 %}
+                            {{ kb|round(2) }} KB
+                        {% elif kb < 1048576 %}
+                            {{ (kb / 1024)|round(2) }} MB
+                        {% else %}
+                            {{ (kb / 1048576)|round(2) }} GB
+                        {% endif %}
+                    </li>
+                </ul>
+            {% else %}
+                <p>Unable to retrieve video metadata.</p>
+            {% endif %}
+        </div>
+    {% else %}
+        <p>No video file found. Please upload a video file.</p>
+    {% endif %}
+</div>
 
 {% endblock %}

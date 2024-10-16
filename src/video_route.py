@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, url_for, send_from_directo
 from werkzeug.utils import secure_filename
 import os
 from .upload_route import get_uploaded_files
+from .video_utils import get_video_information
 
 def configure_video_route(app):
 
@@ -24,8 +25,11 @@ def configure_video_route(app):
         else:
             video_path = app.config['VIDEO_PATH']
 
+        if video_path:
+            video_info = get_video_information(video_path)
+
         return render_template('video.html', uploaded_files=uploaded_files, 
-                               video_path=video_path)
+                               video_path=video_path, video_info=video_info)
 
     @app.route('/uploads/<filename>')
     def uploaded_file(filename):
