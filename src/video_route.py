@@ -44,9 +44,10 @@ def configure_video_route(app):
     @app.route('/crop-video', methods=['POST'])
     def crop_video():
         data = request.json
-        video_path = data['videoPath']
         start_time = data['startTime']
         end_time = data['endTime']
+
+        video_path = app.config['VIDEO_PATH']
 
         output_path = video_path.rsplit('.', 1)[0] + '_cropped.mp4'
 
