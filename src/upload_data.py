@@ -2,14 +2,14 @@ import os
 import cv2
 from werkzeug.utils import secure_filename
 
-UPLOAD_FOLDER = 'uploads'
-FRAME_FOLDER = 'frames'
+def get_uploaded_files(UPLOAD_FOLDER):
+    """Return a list of uploaded file names."""
+    files = []
+    if os.path.exists(UPLOAD_FOLDER):
+        files = os.listdir(UPLOAD_FOLDER)
+    return files
 
-# Ensure the directories exist
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-os.makedirs(FRAME_FOLDER, exist_ok=True)
-
-def save_video(file):
+def save_video(file, UPLOAD_FOLDER):
     """Save the uploaded video file and return its path."""
     filename = secure_filename(file.filename)
     filepath = os.path.join(UPLOAD_FOLDER, filename)
