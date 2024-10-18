@@ -52,6 +52,8 @@ def configure_video_route(app):
 
         output_path = video_path.rsplit('.', 1)[0] + '_cropped.mp4'
 
+        app.config['VIDEO_LENGTH'] = end_time - start_time
+
         try:
             subprocess.run([
                 'ffmpeg',
