@@ -18,6 +18,7 @@ def configure_video_route(app):
             
             if len(files) == 0:
                 video_path = None
+                return render_template('upload.html')
             else:
                 # Select the first video file
                 # TODO: Create popup box to select video file
