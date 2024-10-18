@@ -10,6 +10,7 @@ def configure_app_settings(app):
     app.config['FRAME_FOLDER'] = FRAME_FOLDER
     app.config['VIDEO_PATH'] = None
     app.config['FITNESS_PATH'] = None
+    app.config['VIDEO_LENGTH'] = None
 
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
     os.makedirs(FRAME_FOLDER, exist_ok=True)

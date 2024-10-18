@@ -18,6 +18,7 @@ def configure_video_route(app):
             
             if len(files) == 0:
                 video_path = None
+                return render_template('upload.html')
             else:
                 # Select the first video file
                 # TODO: Create popup box to select video file
@@ -50,6 +51,8 @@ def configure_video_route(app):
         video_path = app.config['VIDEO_PATH']
 
         output_path = video_path.rsplit('.', 1)[0] + '_cropped.mp4'
+
+        app.config['VIDEO_LENGTH'] = end_time - start_time
 
         try:
             subprocess.run([

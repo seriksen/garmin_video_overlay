@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from src.route_utils import configure_app_settings
 from src.upload_route import configure_upload_route
 from src.video_route import configure_video_route
+from src.garmin_route import configure_garmin_route
 import os
 
 app = Flask(__name__)
@@ -15,16 +16,13 @@ configure_upload_route(app)
 # Video route
 configure_video_route(app)
 
+# Garmin route
+configure_garmin_route(app)
+
 @app.route('/')
 def welcome():
     uploaded_files = get_uploaded_files()
     return render_template('welcome.html', uploaded_files=uploaded_files)
-
-
-@app.route('/garmin')
-def garmin():
-    uploaded_files = get_uploaded_files()
-    return render_template('garmin.html', uploaded_files=uploaded_files)
 
 @app.route('/combine')
 def combine():

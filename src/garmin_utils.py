@@ -9,6 +9,10 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 import awkward as ak
+import plotly.express as px
+import plotly.graph_objs as go
+import plotly
+import json
 
 def read_file(file_path: str) -> dict | None:
     
@@ -60,3 +64,13 @@ def get_activity_points(messages: dict) -> pd.DataFrame | None:
         return df
     else:
         return None
+
+def create_speed_plot(df: pd.DataFrame) -> json:
+
+    fig = px.line(df, x='timestamp', y='speed_kmph', title='Speed (km/h)')
+    return json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+
+def create_map_plot(df: pd.DataFrame) -> json:
+    fig = px.scatter_geo(df, lat='latitude', lon='longitude', color='speed_kmph',
+                          title='Location and Speed (km/h)', hover_name='timestamp')
+    return json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
